@@ -1,0 +1,2 @@
+lägg till manuell inställaning av wobj i dobot studio, och skicka med kalibereringspinnar. 
+Viktigt att påvisa offesettten i Z som blir när man använder pinnarna för att skapa wobj 
