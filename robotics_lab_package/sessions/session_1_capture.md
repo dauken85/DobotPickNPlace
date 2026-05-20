@@ -82,3 +82,4 @@
 
 ## Key Concept to Emphasize
 > The quality of your dataset directly determines the quality of your model. Garbage in, garbage out.
+> Focus on the details or metrics that are important for sorting or identifying the correct objects. IE color is less important when sorting shapes, but shadows are critical to eliminate. 

@@ -4,6 +4,7 @@
 - Understand what segmentation annotation means
 - Label objects with polygon masks in Roboflow
 - Train a segmentation model and evaluate its quality
+- Understand the difference between object segmentation and object detection
 
 ## Duration: ~3 hours
 
@@ -36,7 +37,7 @@
 
 ### Part 3: Annotation (45 min)
 1. Teacher demo: annotate 2–3 images live
-   - Select the polygon tool
+   - Select the smart select tool
    - Trace around the object boundary
    - Assign the correct class
    - Show what a good vs sloppy annotation looks like

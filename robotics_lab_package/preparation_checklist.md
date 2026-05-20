@@ -12,11 +12,10 @@ Complete this checklist before the first session. Each station needs its own set
 - [ ] Robot workspace limits programmed (conservative safe zone)
 - [ ] Robot base position documented (X, Y, Z in robot frame)
 - [ ] Manual test move executed successfully
-- [ ] Suction cup picks up a test object reliably
+- [ ] Suction cup picks up a test objects reliably
 
 ### Camera
-- [ ] Basler ACE2 mounted in top-down position above workspace
-- [ ] Camera height measured and recorded: _______ mm
+- [ ] Basler ACE2 mounted in top-down position on robot
 - [ ] Camera connected to PC (USB3 or GigE)
 - [ ] Basler Pylon software installed for initial verification
 - [ ] `pypylon` Python package installed

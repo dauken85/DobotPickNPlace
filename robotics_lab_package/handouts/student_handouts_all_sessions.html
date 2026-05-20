@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Handouts — Robotics Lab (All Sessions)</title>
+  <style>
+    /* ─── Base ──────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      font-size: 11pt;
+      line-height: 1.55;
+      color: #1a1a1a;
+      background: #f4f4f4;
+    }
+
+    /* ─── Page layout (screen preview) ─────────────────────── */
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 12mm auto;
+      padding: 18mm 18mm 16mm 18mm;
+      background: #fff;
+      box-shadow: 0 2px 12px rgba(0,0,0,.15);
+    }
+
+    /* ─── Print ──────────────────────────────────────────────── */
+    @media print {
+      body { background: #fff; }
+      .page {
+        width: 100%;
+        min-height: 0;
+        margin: 0;
+        padding: 14mm 16mm 14mm 16mm;
+        box-shadow: none;
+        page-break-after: always;
+      }
+      .page:last-child { page-break-after: avoid; }
+      @page { size: A4; margin: 0; }
+    }
+
+    /* ─── Session header ─────────────────────────────────────── */
+    .session-header {
+      border-bottom: 3px solid #0057a8;
+      padding-bottom: 6px;
+      margin-bottom: 14px;
+    }
+    .session-label {
+      font-size: 8pt;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: #0057a8;
+    }
+    h1 {
+      font-size: 17pt;
+      font-weight: 700;
+      color: #0057a8;
+      margin-top: 2px;
+      line-height: 1.2;
+    }
+
+    /* ─── Section headings ───────────────────────────────────── */
+    h2 {
+      font-size: 11.5pt;
+      font-weight: 700;
+      color: #0057a8;
+      margin: 14px 0 6px 0;
+      border-left: 4px solid #0057a8;
+      padding-left: 7px;
+    }
+    h3 {
+      font-size: 10.5pt;
+      font-weight: 700;
+      color: #333;
+      margin: 10px 0 4px 0;
+    }
+
+    /* ─── Body text ──────────────────────────────────────────── */
+    p { margin: 5px 0 7px 0; }
+
+    /* ─── Lists ──────────────────────────────────────────────── */
+    ul, ol {
+      padding-left: 20px;
+      margin: 4px 0 8px 0;
+    }
+    li { margin-bottom: 3px; }
+
+    /* ─── Checkbox lists ─────────────────────────────────────── */
+    ul.checklist {
+      list-style: none;
+      padding-left: 4px;
+    }
+    ul.checklist li::before {
+      content: "☐ ";
+      font-size: 11pt;
+    }
+
+    /* ─── Code / monospace ───────────────────────────────────── */
+    code {
+      font-family: "Consolas", "Courier New", monospace;
+      font-size: 9.5pt;
+      background: #eef3fb;
+      border: 1px solid #cdd8eb;
+      border-radius: 3px;
+      padding: 1px 4px;
+    }
+    pre {
+      font-family: "Consolas", "Courier New", monospace;
+      font-size: 9pt;
+      background: #eef3fb;
+      border: 1px solid #cdd8eb;
+      border-radius: 4px;
+      padding: 9px 12px;
+      margin: 6px 0 10px 0;
+      line-height: 1.5;
+      white-space: pre-wrap;
+    }
+
+    /* ─── Pipeline diagram ───────────────────────────────────── */
+    .pipeline {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      flex-wrap: wrap;
+      margin: 8px 0 12px 0;
+    }
+    .pipeline-step {
+      background: #eef3fb;
+      border: 1.5px solid #0057a8;
+      border-radius: 4px;
+      padding: 4px 9px;
+      font-size: 9.5pt;
+      white-space: nowrap;
+    }
+    .pipeline-arrow {
+      font-size: 13pt;
+      color: #0057a8;
+      padding: 0 4px;
+    }
+
+    /* ─── Inline pipeline (text-based) ──────────────────────── */
+    .flow-box {
+      background: #eef3fb;
+      border: 1px solid #cdd8eb;
+      border-radius: 4px;
+      padding: 8px 12px;
+      font-size: 9.5pt;
+      font-family: "Consolas", "Courier New", monospace;
+      margin: 6px 0 10px 0;
+      line-height: 1.7;
+    }
+
+    /* ─── Safety box ─────────────────────────────────────────── */
+    .safety-box {
+      background: #fff4e5;
+      border: 2px solid #e07b00;
+      border-radius: 5px;
+      padding: 8px 12px;
+      margin: 8px 0 12px 0;
+    }
+    .safety-box strong { color: #c05a00; }
+
+    /* ─── Tables ─────────────────────────────────────────────── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 9.5pt;
+      margin: 6px 0 12px 0;
+    }
+    th {
+      background: #0057a8;
+      color: #fff;
+      padding: 5px 7px;
+      text-align: left;
+      font-weight: 600;
+    }
+    td {
+      border: 1px solid #ccc;
+      padding: 5px 7px;
+      vertical-align: top;
+    }
+    tr:nth-child(even) td { background: #f5f8ff; }
+
+    /* ─── Formula box ────────────────────────────────────────── */
+    .formula-box {
+      background: #f0f7f0;
+      border: 1.5px solid #4caf50;
+      border-radius: 4px;
+      padding: 8px 12px;
+      margin: 6px 0 12px 0;
+    }
+    .formula-box pre {
+      background: transparent;
+      border: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    /* ─── Notes area ─────────────────────────────────────────── */
+    .notes-area {
+      border: 1px solid #bbb;
+      border-radius: 4px;
+      min-height: 36mm;
+      padding: 6px 10px;
+      margin-top: 8px;
+      color: #aaa;
+      font-style: italic;
+      font-size: 9pt;
+    }
+
+    /* ─── Blank fill-in lines ────────────────────────────────── */
+    .blank { display: inline-block; min-width: 38mm; border-bottom: 1px solid #555; }
+
+    /* ─── Discussion questions ───────────────────────────────── */
+    .discussion {
+      background: #f5f5f5;
+      border-left: 4px solid #888;
+      padding: 7px 12px;
+      margin: 8px 0 10px 0;
+      border-radius: 0 4px 4px 0;
+    }
+    .discussion ol { margin: 4px 0 0 18px; }
+    .discussion li { margin-bottom: 4px; }
+
+    /* ─── Divider ────────────────────────────────────────────── */
+    hr { border: none; border-top: 1px solid #ddd; margin: 12px 0; }
+
+    /* ─── Bold warning ───────────────────────────────────────── */
+    .warn { font-weight: 700; color: #c05a00; }
+
+    /* ─── Footer ─────────────────────────────────────────────── */
+    .footer {
+      margin-top: auto;
+      padding-top: 8px;
+      border-top: 1px solid #ddd;
+      font-size: 8pt;
+      color: #888;
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════
+     SESSION 1 — Image Capture
+     ══════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="session-header">
+    <div class="session-label">SKF Robotics Lab &mdash; Session 1 of 4</div>
+    <h1>Student Handout: Image Capture</h1>
+  </div>
+
+  <h2>What You Will Do Today</h2>
+  <ol>
+    <li>See a live demo of a robot picking objects guided by a camera</li>
+    <li>Learn how to work safely around the robot</li>
+    <li>Capture images of objects that will be used to train an AI model</li>
+  </ol>
+
+  <h2>The Big Picture</h2>
+  <div class="flow-box">Camera &rarr; AI Model &rarr; "Object is here" &rarr; Robot picks it
+(image)   (segmentation)  (coordinates)        (motion)</div>
+  <p>Today we focus on the <strong>first step</strong>: getting good images for the AI to learn from.</p>
+
+  <div class="safety-box">
+    <strong>&#9888; Safety Rules</strong>
+    <ul>
+      <li><strong>NEVER</strong> put your hands in the robot workspace while it is moving</li>
+      <li>Know where the <strong>emergency stop</strong> button is before starting</li>
+      <li>Always tell your partner before starting robot motion</li>
+      <li>If anything looks wrong, <strong>press the emergency stop</strong></li>
+    </ul>
+  </div>
+
+  <h2>Your Tasks</h2>
+
+  <h3>Task 1 &mdash; Test the Camera</h3>
+  <ol>
+    <li>Open a terminal on your PC</li>
+    <li>Run: <code>python capture_images.py --test</code></li>
+    <li>You should see a live preview from the camera</li>
+    <li>Verify the workspace is visible and well-lit</li>
+  </ol>
+
+  <h3>Task 2 &mdash; Arrange Objects</h3>
+  <ol>
+    <li>Place 3–5 geometric shapes on the workspace</li>
+    <li>Make sure they are clearly visible (not blending into the background)</li>
+    <li>Check the camera view — can you see all objects?</li>
+  </ol>
+
+  <h3>Task 3 &mdash; Capture Images</h3>
+  <ol>
+    <li>Run: <code>python capture_images.py --save</code></li>
+    <li>Each press of <strong>SPACE</strong> saves one image</li>
+    <li>Capture at least <strong>50 images</strong> with different arrangements:</li>
+  </ol>
+  <ul class="checklist">
+    <li>Single object, centered</li>
+    <li>Single object, off-center</li>
+    <li>Two objects, separated</li>
+    <li>Three objects, close together</li>
+    <li>Five objects, mixed clutter</li>
+    <li>Objects touching each other</li>
+    <li>Different orientations (rotated)</li>
+  </ul>
+  <p>Press <strong>Q</strong> to quit when done.</p>
+
+  <h3>Task 4 &mdash; Review Your Dataset</h3>
+  <ol>
+    <li>Open the image folder and browse through your captures</li>
+    <li>Delete any blurry, dark, or unusable images</li>
+    <li>Count your usable images: <span class="blank">&nbsp;</span> &nbsp;(aim for 50+)</li>
+  </ol>
+
+  <div class="discussion">
+    <strong>Discussion Questions</strong>
+    <ol>
+      <li>What makes a "good" training image?</li>
+      <li>Why do we need many different arrangements?</li>
+      <li>What would happen if all images looked the same?</li>
+    </ol>
+  </div>
+
+  <h2>Notes</h2>
+  <div class="notes-area">Write your observations here&hellip;</div>
+
+  <div class="footer">
+    <span>SKF Robotics Lab &mdash; Högskolan Väst</span>
+    <span>Session 1 / 4</span>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     SESSION 2 — Annotation and Training
+     ══════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="session-header">
+    <div class="session-label">SKF Robotics Lab &mdash; Session 2 of 4</div>
+    <h1>Student Handout: Annotation and Training</h1>
+  </div>
+
+  <h2>What You Will Do Today</h2>
+  <ol>
+    <li>Upload your images to Roboflow</li>
+    <li>Draw segmentation masks around each object</li>
+    <li>Train an AI model to recognize your objects</li>
+    <li>Evaluate how well the model works</li>
+  </ol>
+
+  <p><strong>Why annotation matters:</strong> The AI model learns <em>only</em> from the examples you give it. If you label objects sloppily, the model will segment objects sloppily. Your annotations are the ground truth.</p>
+
+  <h2>Your Tasks</h2>
+
+  <h3>Task 1 &mdash; Upload Images</h3>
+  <ol>
+    <li>Log into Roboflow at <strong>app.roboflow.com</strong></li>
+    <li>Open your group's project</li>
+    <li>Upload all your images from Session 1</li>
+    <li>Verify the upload count matches your images</li>
+  </ol>
+
+  <h3>Task 2 &mdash; Define Your Classes</h3>
+  <p>Use these <strong>exact</strong> class names: <code>square</code> &nbsp;<code>rectangle</code> &nbsp;<code>circle</code> &nbsp;<code>triangle</code></p>
+  <p><span class="warn">Important:</span> Do not add extra classes unless the teacher says so.</p>
+
+  <h3>Task 3 &mdash; Annotate</h3>
+  <ol>
+    <li>Select the <strong>polygon annotation</strong> tool (not bounding box!)</li>
+    <li>For each object in each image: click around the boundary, select the correct class, make sure the polygon follows the actual edge</li>
+  </ol>
+  <table>
+    <tr><th>Quality</th><th>Description</th></tr>
+    <tr><td>&#9989; Good</td><td>Polygon tightly follows the object edge</td></tr>
+    <tr><td>&#10060; Bad</td><td>Loose polygon with lots of empty space</td></tr>
+    <tr><td>&#10060; Bad</td><td>Polygon cuts through the object</td></tr>
+  </table>
+  <p>Use <em>more</em> points for curved shapes (circles); <em>fewer</em> points for straight edges (squares).</p>
+
+  <h3>Task 4 &mdash; Train Your Model</h3>
+  <ol>
+    <li>Go to <strong>Generate</strong> &rarr; Create a new version</li>
+    <li>Use the default preprocessing and augmentation settings</li>
+    <li>Click <strong>Train</strong> and select the segmentation model</li>
+    <li>Training takes ~15–30 minutes — complete the discussion below while waiting</li>
+  </ol>
+
+  <h3>Task 5 &mdash; Evaluate</h3>
+  <p>Once training is complete, go to the <strong>Visualize</strong> tab and inspect predictions:</p>
+  <table>
+    <tr><th>Image</th><th>Objects Present</th><th>Objects Found</th><th>Correct?</th><th>Notes</th></tr>
+    <tr><td>1</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+    <tr><td>2</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+    <tr><td>3</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+    <tr><td>4</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+    <tr><td>5</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  </table>
+
+  <h3>Task 6 &mdash; Record Your API Key</h3>
+  <p>Your model's API key: <span class="blank" style="min-width:70mm">&nbsp;</span></p>
+  <p>Your model version: <span class="blank" style="min-width:50mm">&nbsp;</span></p>
+  <p style="font-size:9pt;color:#555;">(You will need these in Session 3)</p>
+
+  <div class="discussion">
+    <strong>Discussion Questions (While Training)</strong>
+    <ol>
+      <li>What would happen if we only had 10 images?</li>
+      <li>What if we mislabeled circles as squares?</li>
+      <li>How does the model know which part of the image is "background"?</li>
+      <li>What is overfitting, and why does it matter?</li>
+    </ol>
+  </div>
+
+  <h2>Notes</h2>
+  <div class="notes-area">Write your observations here&hellip;</div>
+
+  <div class="footer">
+    <span>SKF Robotics Lab &mdash; Högskolan Väst</span>
+    <span>Session 2 / 4</span>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     SESSION 3 — Inference and Calibration
+     ══════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="session-header">
+    <div class="session-label">SKF Robotics Lab &mdash; Session 3 of 4</div>
+    <h1>Student Handout: Inference and Calibration</h1>
+  </div>
+
+  <h2>What You Will Do Today</h2>
+  <ol>
+    <li>Run your trained model on images and inspect the results</li>
+    <li>Learn why the robot needs calibration to understand camera images</li>
+    <li>Perform a simple calibration using an ArUco marker</li>
+    <li>Convert object positions from pixels to millimetres</li>
+  </ol>
+
+  <p><strong>The core problem:</strong> The camera sees <em>pixels</em> (e.g., "circle center at 800, 450 px"). The robot works in <em>millimetres</em> (e.g., "move to 250, 150 mm"). Today you will figure out the conversion.</p>
+
+  <h2>Your Tasks</h2>
+
+  <h3>Task 1 &mdash; Run Inference on Saved Images</h3>
+  <ol>
+    <li>Open <code>run_inference.py</code> and enter your API key and model version</li>
+    <li>Run: <code>python run_inference.py --image path/to/your/image.jpg</code></li>
+    <li>Inspect the output: class detected, confidence score, mask position</li>
+    <li>Adjust the confidence threshold (line marked <code># TODO: adjust threshold</code>):
+      <ul>
+        <li>Set to <code>0.3</code> — what happens? <span class="blank">&nbsp;</span></li>
+        <li>Set to <code>0.95</code> — what happens? <span class="blank">&nbsp;</span></li>
+        <li>Good threshold chosen: <span class="blank">&nbsp;</span></li>
+      </ul>
+    </li>
+  </ol>
+
+  <h3>Task 2 &mdash; Understand the Calibration Concept</h3>
+  <table>
+    <tr><th>Measurement</th><th>Value</th></tr>
+    <tr><td>Image width (pixels)</td><td>&nbsp;</td></tr>
+    <tr><td>Image height (pixels)</td><td>&nbsp;</td></tr>
+    <tr><td>Workspace width (mm, measured)</td><td>&nbsp;</td></tr>
+    <tr><td>Rough estimate: 1 pixel ≈ _____ mm</td><td>&nbsp;</td></tr>
+  </table>
+
+  <h3>Task 3 &mdash; ArUco Calibration</h3>
+  <ol>
+    <li>Place the ArUco marker flat on the workspace</li>
+    <li>Measure the marker: <span class="blank">&nbsp;</span> mm</li>
+    <li>Open <code>aruco_calibration.py</code> and enter your measurement on the line marked <code># TODO: enter your measured marker size</code></li>
+    <li>Run: <code>python aruco_calibration.py</code></li>
+  </ol>
+  <table>
+    <tr><th>Result</th><th>Value</th></tr>
+    <tr><td>Marker width in pixels</td><td>&nbsp;</td></tr>
+    <tr><td>Marker size in mm</td><td>&nbsp;</td></tr>
+    <tr><td><strong>mm per pixel</strong></td><td>&nbsp;</td></tr>
+  </table>
+
+  <h3>Task 4 &mdash; Verify Your Calibration</h3>
+  <table>
+    <tr><th></th><th>Pixel Position</th><th>Computed mm</th><th>Measured mm</th><th>Error</th></tr>
+    <tr><td>X</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+    <tr><td>Y</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  </table>
+  <p style="font-size:9.5pt;">Is the error acceptable for a suction cup? (hint: ±5–10 mm is usually fine)</p>
+
+  <h3>Task 5 &mdash; Combine Inference + Calibration</h3>
+  <ol>
+    <li>Run inference on a new image; note the detected object centre in pixels</li>
+    <li>Apply your calibration to convert to mm</li>
+    <li>These mm values will become the robot's pick target in Session 4</li>
+  </ol>
+
+  <h3>Task 6 &mdash; Live Inference (If Time Permits)</h3>
+  <ol>
+    <li>Run: <code>python run_inference.py --live</code></li>
+    <li>Move objects around and watch the detection update</li>
+    <li>Does the model still work well on live images?</li>
+  </ol>
+
+  <div class="formula-box">
+    <strong>Key Formulas</strong>
+    <pre>mm_per_pixel  = marker_size_mm / marker_width_pixels
+
+object_x_mm   = object_x_pixels × mm_per_pixel
+object_y_mm   = object_y_pixels × mm_per_pixel
+
+robot_x       = object_x_mm + workspace_offset_x
+robot_y       = object_y_mm + workspace_offset_y</pre>
+  </div>
+
+  <div class="discussion">
+    <strong>Discussion Questions</strong>
+    <ol>
+      <li>Why do we need a fixed camera position for this to work?</li>
+      <li>What would happen if the camera was tilted instead of top-down?</li>
+      <li>What if objects were tall (like a bottle) — would the centroid still be correct?</li>
+      <li>Is this method good enough for a factory? What would need to change?</li>
+    </ol>
+  </div>
+
+  <h2>Notes</h2>
+  <div class="notes-area">Write your observations here&hellip;</div>
+
+  <div class="footer">
+    <span>SKF Robotics Lab &mdash; Högskolan Väst</span>
+    <span>Session 3 / 4</span>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     SESSION 4 — Robot-Guided Pick and Place
+     ══════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="session-header">
+    <div class="session-label">SKF Robotics Lab &mdash; Session 4 of 4</div>
+    <h1>Student Handout: Robot-Guided Pick and Place</h1>
+  </div>
+
+  <h2>What You Will Do Today</h2>
+  <ol>
+    <li>Connect your vision pipeline to the robot arm</li>
+    <li>Pick objects using camera-guided coordinates</li>
+    <li>Test with mixed clutter and analyse failures</li>
+  </ol>
+
+  <h2>The Full Pipeline</h2>
+  <div class="flow-box">Camera captures image
+       ↓
+Model segments objects
+       ↓
+Pick point computed (pixel → mm)
+       ↓
+Robot moves to pick point
+       ↓
+Suction ON → Lift → Move to drop zone → Suction OFF</div>
+
+  <div class="safety-box">
+    <strong>&#9888; Safety Reminder</strong>
+    <ul>
+      <li>Emergency stop location: <span class="blank" style="min-width:60mm">&nbsp;</span></li>
+      <li><strong>Teacher must approve your first automated pick</strong></li>
+      <li>Hands <strong>completely clear</strong> of workspace during robot motion</li>
+      <li>Tell your partner before pressing "Run"</li>
+    </ul>
+  </div>
+
+  <h2>Your Tasks</h2>
+
+  <h3>Task 1 &mdash; Pre-Flight Check</h3>
+  <ul class="checklist">
+    <li>Camera is connected and capturing</li>
+    <li>Model is loaded and detecting objects</li>
+    <li>Calibration value is entered correctly</li>
+    <li>Robot is homed and suction cup is working</li>
+    <li>Drop zone is clear and defined</li>
+    <li>Emergency stop is within reach</li>
+  </ul>
+
+  <h3>Task 2 &mdash; First Pick (Teacher Supervised)</h3>
+  <ol>
+    <li>Place <strong>one</strong> object in the centre of the workspace</li>
+    <li>Run the full pipeline (the teacher will guide you)</li>
+    <li>Result: <span class="blank">&nbsp;</span> &nbsp;|&nbsp; If miss, estimated error: <span class="blank">&nbsp;</span> mm</li>
+  </ol>
+
+  <h3>Task 3 &mdash; Independent Picking</h3>
+  <table>
+    <tr>
+      <th>Pick #</th><th>Object</th><th>Confidence</th>
+      <th>Position (mm)</th><th>Result</th><th>Notes</th>
+    </tr>
+    <tr><td>1</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+    <tr><td>2</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+    <tr><td>3</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+    <tr><td>4</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+    <tr><td>5</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+    <tr><td>6</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+    <tr><td>7</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+    <tr><td>8</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+    <tr><td>9</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+    <tr><td>10</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  </table>
+  <p><strong>Success rate:</strong> <span class="blank">&nbsp;</span> / 10</p>
+
+  <h3>Task 4 &mdash; Tuning</h3>
+  <table>
+    <tr><th>Parameter</th><th>Original</th><th>New Value</th><th>Effect</th></tr>
+    <tr><td>Confidence threshold</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+    <tr><td>Minimum area filter</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  </table>
+
+  <h3>Task 5 &mdash; Mixed Clutter Challenge</h3>
+  <p>
+    Total objects: <span class="blank">&nbsp;</span> &nbsp;&nbsp;
+    Successfully picked: <span class="blank">&nbsp;</span> &nbsp;&nbsp;
+    Missed: <span class="blank">&nbsp;</span> &nbsp;&nbsp;
+    Misidentified: <span class="blank">&nbsp;</span>
+  </p>
+
+  <h3>Task 6 &mdash; Final Demo</h3>
+  <p>Set up your best arrangement and demo your system to the group. Be prepared to explain: how your pipeline works, your success rate, and the biggest source of error.</p>
+
+  <hr>
+  <h2>Reflection Questions</h2>
+  <p><strong>1.</strong> What was the most common reason for failed picks?</p>
+  <div class="notes-area" style="min-height:16mm">&nbsp;</div>
+
+  <p><strong>2.</strong> How accurate was your calibration? Good enough for suction?</p>
+  <div class="notes-area" style="min-height:16mm">&nbsp;</div>
+
+  <p><strong>3.</strong> What would you change to make this system more reliable?</p>
+  <div class="notes-area" style="min-height:16mm">&nbsp;</div>
+
+  <p><strong>4.</strong> Could this work in a real factory? What would need to be different?</p>
+  <div class="notes-area" style="min-height:16mm">&nbsp;</div>
+
+  <div class="footer">
+    <span>SKF Robotics Lab &mdash; Högskolan Väst</span>
+    <span>Session 4 / 4</span>
+  </div>
+</div>
+
+</body>
+</html>
