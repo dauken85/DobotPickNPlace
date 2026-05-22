@@ -33,12 +33,13 @@ Before running any automated picks, verify:
 - [ ] Model is loaded and detecting objects
 - [ ] Calibration value is entered correctly
 - [ ] Robot is homed and suction cup is working
+- [ ] `image_acquisition_pose.json` from Session 1 is available
 - [ ] Drop zone is clear and defined
 - [ ] Emergency stop is within reach
 
 ### Task 2: First Pick (Teacher Supervised)
 1. Place **one** object in the center of the workspace
-2. Run the full pipeline (the teacher will guide you)
+2. Move to saved image pose, then run the full pipeline (the teacher will guide you)
 3. Observe:
    - Where does the model say the object is?
    - Where does the robot go?
@@ -103,4 +104,7 @@ Answer these after completing the lab:
 
 ## Notes Space
 _Use this area to write down observations:_
+
+Quick command reminder:
+`python -c "from dobot_pick import DobotE6, move_to_image_acquisition_pose; r=DobotE6(); r.connect(); r.enable(); move_to_image_acquisition_pose(r, 'image_acquisition_pose.json'); r.disconnect()"`
 

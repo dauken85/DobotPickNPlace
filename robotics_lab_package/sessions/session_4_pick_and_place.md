@@ -36,6 +36,7 @@
 ### Part 3: First Supervised Picks (30 min)
 1. Place a single object in clear space
 2. Run the pipeline step by step:
+   - Move robot to saved image-acquisition pose from Session 1
    - Capture image
    - Run segmentation
    - Compute pick point (centroid in mm)
@@ -93,6 +94,7 @@
 - The pick routine should have conservative speed limits
 - Set the robot approach height well above the object, then descend slowly
 - Pre-define a safe drop zone away from the pick area
+- If `image_acquisition_pose.json` is missing or invalid, re-jog and re-save before continuing
 - If the robot misses badly (>20 mm), recalibrate before continuing
 - If a group's model fails consistently, switch to the backup model
 - Keep spare objects in case some get damaged or lost

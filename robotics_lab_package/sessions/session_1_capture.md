@@ -46,6 +46,11 @@
 3. Arrange the workspace: flat surface, controlled background
 4. Position lighting to minimize shadows and reflections
 5. Place a few objects and verify they are visible in the camera
+6. In Dobot software, manually jog the robot to the camera image-acquisition pose
+7. Save that pose before data collection:
+   - Run: `python save_image_pose.py --output image_acquisition_pose.json`
+   - Verify the JSON file is created and shared with your station files
+   - This pose is reused in Session 4 before each snapshot
 
 ### Break (15 min)
 
@@ -79,6 +84,7 @@
 - Aim for 50–100 usable images per group
 - Encourage students to think about edge cases: overlapping objects, shadows, partial occlusion
 - If a group finishes early, have them capture additional challenging arrangements
+- Ensure each station has a saved `image_acquisition_pose.json` before ending Session 1
 
 ## Key Concept to Emphasize
 > The quality of your dataset directly determines the quality of your model. Garbage in, garbage out.

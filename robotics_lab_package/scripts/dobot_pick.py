@@ -16,6 +16,9 @@ Students call pick_object() with coordinates from the vision pipeline.
 
 import socket
 import time
+import json
+import os
+import re
 
 # ============================================================================
 # Connection settings
@@ -169,6 +172,19 @@ class DobotE6:
         """Return the raw GetPose() response string."""
         return self.send("GetPose()")
 
+    def get_pose_values(self):
+        """Return current TCP pose as (x, y, z, rx, ry, rz).
+
+        This parser is tolerant to small firmware response variations as long
+        as the response contains six pose values.
+        """
+        raw = self.get_pose()
+        numbers = [float(n) for n in re.findall(r"[-+]?\d*\.?\d+", raw)]
+        if len(numbers) < 6:
+            raise RuntimeError(f"Could not parse pose from GetPose response: {raw}")
+        x, y, z, rx, ry, rz = numbers[:6]
+        return x, y, z, rx, ry, rz
+
     def wait_idle(self, timeout=30.0):
         """Block until the robot returns to mode 5 (idle) or timeout."""
         time.sleep(0.3)
@@ -263,3 +279,78 @@ def pick_object(robot: DobotE6,
     robot.move_to(dx, dy, SAFE_Z, **kw)
 
     print("--- Pick complete ---\n")
+
+
+def save_image_acquisition_pose(
+    robot: DobotE6,
+    file_path: str = "image_acquisition_pose.json",
+    user: int = 0,
+    tool: int = 0,
+):
+    """Save the robot's current pose as the camera image-acquisition pose.
+
+    Typical workflow:
+      1. Jog manually in Dobot software to the desired camera pose
+      2. Run this function once to store the pose to disk
+      3. Reuse in Session 4 before each camera snapshot
+    """
+    x, y, z, rx, ry, rz = robot.get_pose_values()
+    payload = {
+        "name": "image_acquisition_pose",
+        "pose": {
+            "x": round(x, 4),
+            "y": round(y, 4),
+            "z": round(z, 4),
+            "rx": round(rx, 4),
+            "ry": round(ry, 4),
+            "rz": round(rz, 4),
+        },
+        "user": int(user),
+        "tool": int(tool),
+    }
+
+    with open(file_path, "w", encoding="utf-8") as f:
+        json.dump(payload, f, indent=2)
+
+    print(f"Saved image-acquisition pose to: {os.path.abspath(file_path)}")
+    print(
+        "  Pose: "
+        f"({payload['pose']['x']:.2f}, {payload['pose']['y']:.2f}, {payload['pose']['z']:.2f}, "
+        f"{payload['pose']['rx']:.2f}, {payload['pose']['ry']:.2f}, {payload['pose']['rz']:.2f})"
+    )
+    return payload
+
+
+def load_image_acquisition_pose(file_path: str = "image_acquisition_pose.json"):
+    """Load a previously saved image-acquisition pose from disk."""
+    with open(file_path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    pose = data.get("pose", {})
+    required = ["x", "y", "z", "rx", "ry", "rz"]
+    missing = [k for k in required if k not in pose]
+    if missing:
+        raise ValueError(f"Invalid pose file (missing keys: {missing})")
+    return data
+
+
+def move_to_image_acquisition_pose(
+    robot: DobotE6,
+    file_path: str = "image_acquisition_pose.json",
+):
+    """Move the robot to the saved camera image-acquisition pose."""
+    data = load_image_acquisition_pose(file_path)
+    pose = data["pose"]
+    user = data.get("user")
+    tool = data.get("tool")
+
+    print("Moving to saved image-acquisition pose...")
+    robot.move_to(
+        pose["x"],
+        pose["y"],
+        pose["z"],
+        pose["rx"],
+        pose["ry"],
+        pose["rz"],
+        user=user,
+        tool=tool,
+    )

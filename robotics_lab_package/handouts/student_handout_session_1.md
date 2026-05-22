@@ -33,6 +33,13 @@ Today we focus on the **first step**: getting good images for the AI to learn fr
 2. Make sure they are clearly visible (not blending into the background)
 3. Check the camera view — can you see all objects?
 
+### Task 2B: Save Camera Robot Pose (Important)
+1. In Dobot software, jog manually to the camera image-acquisition position
+2. Keep the robot still at that position
+3. Run: `python save_image_pose.py --output image_acquisition_pose.json`
+4. Confirm `image_acquisition_pose.json` exists
+5. Keep this file for Session 4 (robot returns to this pose before each snapshot)
+
 ### Task 3: Capture Images
 1. Run: `python capture_images.py --save`
 2. Each press of **SPACE** saves one image
