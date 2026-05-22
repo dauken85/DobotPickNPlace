@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c 'import json; nb=json.load\\(open\\(r'\\\\''d:/Projects/Github/DobotPickNPlace/robotics_lab_package/notebooks/lab_full_pipeline.ipynb'\\\\'',encoding='\\\\''utf-8'\\\\''\\)\\); *)",
+      "PowerShell($env:PYTHONIOENCODING='utf-8'; python -c \"import json; nb=json.load\\(open\\(r'd:/Projects/Github/DobotPickNPlace/robotics_lab_package/notebooks/lab_full_pipeline.ipynb',encoding='utf-8'\\)\\); [print\\(f'=== cell {i} ===\\\\n'+''.join\\(nb['cells'][i]['source']\\)\\) for i in [3,4]]\")",
+      "PowerShell($env:PYTHONIOENCODING='utf-8'; python d:\\\\Projects\\\\Github\\\\DobotPickNPlace\\\\_patch_cell3.py)"
+    ]
+  }
+}
