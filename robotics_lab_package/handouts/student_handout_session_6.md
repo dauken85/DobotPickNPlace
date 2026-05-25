@@ -1,4 +1,4 @@
-# Student Handout — Session 5: Pick Point Computation
+# Student Handout — Session 6: Pick Point Computation
 
 ## What You Will Do in this Session
 1. Combine inference and calibration to compute pick points in robot coordinates.
