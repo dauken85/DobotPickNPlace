@@ -2,8 +2,7 @@
 import subprocess, sys, os, markdown
 
 HANDOUTS_DIR = os.path.dirname(__file__)
-OUTPUT_HTML  = os.path.join(HANDOUTS_DIR, "_all_sessions_combined.html")
-OUTPUT_PDF   = os.path.join(HANDOUTS_DIR, "student_handouts_all_sessions.pdf")
+SV_DIR       = os.path.join(HANDOUTS_DIR, "handouts_sv")
 EDGE         = r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
 
 SESSION_FILES = [
@@ -15,6 +14,11 @@ SESSION_FILES = [
     "student_handout_session_6.md",
     "student_handout_session_7.md",
     "student_handout_session_8.md",
+]
+
+BUILDS = [
+    (HANDOUTS_DIR, "en", "_all_sessions_combined.html",    "student_handouts_all_sessions.pdf"),
+    (SV_DIR,       "sv", "_all_sessions_combined_sv.html", "student_handouts_all_sessions_sv.pdf"),
 ]
 
 CSS = """
@@ -72,19 +76,28 @@ li { margin: .25em 0; }
 
 md = markdown.Markdown(extensions=["fenced_code", "tables", "nl2br"])
 
-parts = []
-for i, fname in enumerate(SESSION_FILES):
-    path = os.path.join(HANDOUTS_DIR, fname)
-    with open(path, encoding="utf-8") as f:
-        text = f.read()
-    md.reset()
-    html = md.convert(text)
-    cls = "session" if i > 0 else "session"
-    parts.append(f'<div class="session">{html}</div>')
 
-body = "\n".join(parts)
-full_html = f"""<!DOCTYPE html>
-<html lang="en">
+def build(src_dir: str, lang: str, html_name: str, pdf_name: str) -> bool:
+    files = [os.path.join(src_dir, f) for f in SESSION_FILES]
+    if not any(os.path.exists(p) for p in files):
+        print(f"SKIP ({lang}): no files found in {src_dir}")
+        return True
+
+    output_html = os.path.join(HANDOUTS_DIR, html_name)
+    output_pdf  = os.path.join(HANDOUTS_DIR, pdf_name)
+
+    parts = []
+    for path in files:
+        if not os.path.exists(path):
+            continue
+        with open(path, encoding="utf-8") as f:
+            text = f.read()
+        md.reset()
+        parts.append(f'<div class="session">{md.convert(text)}</div>')
+
+    body = "\n".join(parts)
+    full_html = f"""<!DOCTYPE html>
+<html lang="{lang}">
 <head>
 <meta charset="UTF-8">
 <title>Student Handouts — All Sessions</title>
@@ -95,21 +108,27 @@ full_html = f"""<!DOCTYPE html>
 </body>
 </html>
 """
+    with open(output_html, "w", encoding="utf-8") as f:
+        f.write(full_html)
 
-with open(OUTPUT_HTML, "w", encoding="utf-8") as f:
-    f.write(full_html)
-print(f"HTML written: {OUTPUT_HTML}")
+    result = subprocess.run(
+        [EDGE, "--headless", "--disable-gpu", f"--print-to-pdf={output_pdf}",
+         "--print-to-pdf-no-header", "--no-pdf-header-footer", output_html],
+        capture_output=True, text=True, timeout=60
+    )
 
-result = subprocess.run(
-    [EDGE, "--headless", "--disable-gpu", f"--print-to-pdf={OUTPUT_PDF}",
-     "--print-to-pdf-no-header", OUTPUT_HTML],
-    capture_output=True, text=True, timeout=60
-)
+    if result.returncode == 0 and os.path.exists(output_pdf):
+        print(f"PDF written: {output_pdf}  ({os.path.getsize(output_pdf):,} bytes)")
+        os.remove(output_html)
+        return True
+    else:
+        print("Edge stdout:", result.stdout)
+        print("Edge stderr:", result.stderr)
+        return False
 
-if result.returncode == 0 and os.path.exists(OUTPUT_PDF):
-    size = os.path.getsize(OUTPUT_PDF)
-    print(f"PDF written: {OUTPUT_PDF}  ({size:,} bytes)")
-else:
-    print("Edge stdout:", result.stdout)
-    print("Edge stderr:", result.stderr)
-    sys.exit(1)
+
+ok = True
+for src_dir, lang, html_name, pdf_name in BUILDS:
+    ok = build(src_dir, lang, html_name, pdf_name) and ok
+
+sys.exit(0 if ok else 1)

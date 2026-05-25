@@ -45,8 +45,3 @@ Today we focus on the **first step**: getting good images for the AI to learn fr
    - [ ] Objects touching each other
    - [ ] Different orientations (rotated)
 4. Continue and run the rest of the sections in Session 1.
-
-## Discussion Questions
-- What makes a "good" training image?
-- Why do we need many different arrangements?
-- What would happen if all images looked the same?
