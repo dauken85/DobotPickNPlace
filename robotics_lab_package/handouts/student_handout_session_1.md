@@ -1,6 +1,6 @@
 # Student Handout — Session 1: Image Capture
 
-## What You Will Do Today
+## What You Will Do in this Session
 1. See a live demo of a robot picking objects guided by a camera
 2. Learn how to work safely around the robot
 3. Capture images of objects that will be used to train an AI model
@@ -23,8 +23,8 @@ Today we focus on the **first step**: getting good images for the AI to learn fr
 ## Your Tasks
 
 ### Task 1: Test the Camera
-1. Open a terminal on your PC
-2. Run: `python capture_images.py --test`
+1. Open Pylon viewer, connect the Basler camera
+2. Activate the camera and capture an image or start a video feed.
 3. You should see a live preview from the camera
 4. Verify the workspace is visible and well-lit
 
@@ -34,9 +34,9 @@ Today we focus on the **first step**: getting good images for the AI to learn fr
 3. Check the camera view — can you see all objects?
 
 ### Task 3: Capture Images
-1. Run: `python capture_images.py --save`
-2. Each press of **SPACE** saves one image
-3. Capture at least **50 images** with different arrangements:
+1. Go to 1. Image Capture section in Jupiter notebook.
+2. Go over and run the sections one by one.
+3. At "Image Harvesting"; Capture at least **20 images** with different arrangements:
    - [ ] Single object, centered
    - [ ] Single object, off-center
    - [ ] Two objects, separated
@@ -44,18 +44,9 @@ Today we focus on the **first step**: getting good images for the AI to learn fr
    - [ ] Five objects, mixed clutter
    - [ ] Objects touching each other
    - [ ] Different orientations (rotated)
-4. Press **Q** to quit when done
-
-### Task 4: Review Your Dataset
-1. Open the image folder and browse through your captures
-2. Delete any blurry, dark, or unusable images
-3. Count your usable images: _______ (aim for 50+)
+4. Continue and run the rest of the sections in Session 1.
 
 ## Discussion Questions
 - What makes a "good" training image?
 - Why do we need many different arrangements?
 - What would happen if all images looked the same?
-
-## Notes Space
-_Use this area to write down observations:_
-

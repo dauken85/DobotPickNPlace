@@ -1,106 +1,44 @@
-# Student Handout — Session 4: Robot-Guided Pick and Place
+# Student Handout — Session 4: ArUco Calibration
 
-## What You Will Do Today
-1. Connect your vision pipeline to the robot arm
-2. Pick objects using camera-guided coordinates
-3. Test with mixed clutter and analyze failures
+## What You Will Do in this Session
+1. Learn why the robot needs calibration to understand camera images
+2. Perform a simple calibration using an ArUco marker
+3. Convert object positions from pixels to millimeters
 
-## The Full Pipeline (Running Today)
+## The Core Problem
+The camera sees **pixels** (e.g., "the circle center is at pixel 800, 450").
+The robot works in **millimeters** (e.g., "move to 250 mm, 150 mm").
 
-```
-Camera captures image
-       ↓
-Model segments objects
-       ↓
-Pick point computed (pixel → mm)
-       ↓
-Robot moves to pick point
-       ↓
-Suction ON → Lift → Move to drop zone → Suction OFF
-```
-
-## Safety Reminder
-- Emergency stop is at: _________________________________
-- **Teacher must approve your first automated pick**
-- Hands **completely clear** of workspace during robot motion
-- Tell your partner before pressing "Run"
+In this session you will figure out the conversion between these two worlds.
 
 ## Your Tasks
 
-### Task 1: Pre-Flight Check
-Before running any automated picks, verify:
-- [ ] Camera is connected and capturing
-- [ ] Model is loaded and detecting objects
-- [ ] Calibration value is entered correctly
-- [ ] Robot is homed and suction cup is working
-- [ ] Drop zone is clear and defined
-- [ ] Emergency stop is within reach
+### Task 1: Understand the Calibration Concept
+Look at the camera image. Answer these questions:
+- The image is _______ pixels wide and _______ pixels tall
+- The workspace is approximately _______ mm wide (measure with a ruler)
+- So roughly, 1 pixel ≈ _______ mm (divide workspace width by image width)
 
-### Task 2: First Pick (Teacher Supervised)
-1. Place **one** object in the center of the workspace
-2. Run the full pipeline (the teacher will guide you)
-3. Observe:
-   - Where does the model say the object is?
-   - Where does the robot go?
-   - Does the suction cup land on the object?
-4. Result: Success / Miss / Partial
-5. If miss: estimate the error in mm: _______
+This rough estimate shows the idea. Now let's do it precisely.
 
-### Task 3: Independent Picking
-Run picks on your own. Log every attempt:
+### Task 2: ArUco Calibration
+1. Place the ArUco marker flat on the workspace
+2. **Measure the marker**: _______ mm
+4. Find the line marked `# TODO: enter your measured marker size` in section 2.
+5. Enter your measurement
+6. Run the section, it will show you the size you specified.
+7. Now, place the ArUco marker flat on the workspace in the bottom left corner of the camera view.
+8. Run the capture section and it will show you an image with the ArUco marker.
+9. Record the results:
+   - Marker width in pixels: _______
+   - Marker size in mm: _______
+   - **mm per pixel**: _______
 
-| Pick # | Object | Confidence | Position (mm) | Result | Notes |
-|--------|--------|------------|---------------|--------|-------|
-| 1 | | | | | |
-| 2 | | | | | |
-| 3 | | | | | |
-| 4 | | | | | |
-| 5 | | | | | |
-| 6 | | | | | |
-| 7 | | | | | |
-| 8 | | | | | |
-| 9 | | | | | |
-| 10 | | | | | |
-
-**Success rate:** _______ / 10
-
-### Task 4: Tuning
-Try adjusting these parameters (one at a time!) and see the effect:
-- **Confidence threshold:** Only pick objects above a certain confidence
-  - Current: _______ → Changed to: _______ → Effect: _________________
-- **Minimum area:** Ignore very small detections (noise)
-  - Current: _______ → Changed to: _______ → Effect: _________________
-
-### Task 5: Mixed Clutter Challenge
-1. Place 5+ objects in a challenging arrangement
-2. Try to pick all of them, one by one
-3. Record:
-   - Total objects: _______
-   - Successfully picked: _______
-   - Missed: _______
-   - Misidentified: _______
-
-### Task 6: Final Demo
-1. Set up your best arrangement
-2. Demo your system to the group
-3. Be prepared to explain:
-   - How your pipeline works
-   - What your success rate was
-   - What the biggest source of error was
-
-## Reflection Questions
-Answer these after completing the lab:
-
-1. What was the most common reason for failed picks?
-
-2. How accurate was your calibration? Good enough for suction, or not?
-
-3. What would you change to make this system more reliable?
-
-4. Could this system work in a real factory? What would need to be different?
-
-5. What did you learn that surprised you?
-
-## Notes Space
-_Use this area to write down observations:_
+### Task 3: Verify Your Calibration
+1. Place an object on the workspace within the cameras view.
+2. Take a ruler and measure the distance from the lower left corner of the ArUco to the center of the marker.
+3. At the top of the section find **MANUAL_MEASUREMENT_MM = 130 # <-- CHANGE THIS** enter the correct measurement in mm.
+4. Run the verification section to capture an image and find the object's pixel position
+5. The program will show an image where it marked the marker and the calculated distance.
+6. Is the error between the measured and the calculated acceptable for a suction cup? (hint: ±5–10 mm is usually fine)
 
