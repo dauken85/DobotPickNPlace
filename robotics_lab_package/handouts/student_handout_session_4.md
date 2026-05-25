@@ -34,7 +34,7 @@ This rough estimate shows the idea. Now let's do it precisely.
    - Marker size in mm: _______
    - **mm per pixel**: _______
 
-### Task 3: Verify Your Calibration
+### Task 3: Verification of your Calibration
 1. Place an object on the workspace within the cameras view.
 2. Take a ruler and measure the distance from the lower left corner of the ArUco to the center of the marker.
 3. At the top of the section find **MANUAL_MEASUREMENT_MM = 130 # <-- CHANGE THIS** enter the correct measurement in mm.
