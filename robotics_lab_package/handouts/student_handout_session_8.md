@@ -41,3 +41,13 @@ Suction ON → Lift → Move to drop zone → Suction OFF
    - How your pipeline works
    - What your success rate is
    - What the biggest source of error was
+
+
+### Task 4: Information About Packing Down the Robot
+1. Use the following seetings on the joint values
+	J1    0 
+	J2  125
+	J3 - 92
+	J4 - 90
+	J5  135
+	J6 -  4

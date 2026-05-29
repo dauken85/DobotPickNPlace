@@ -1,50 +1,36 @@
-# Student Handout — Session 4: ArUco Calibration
+# Student Handout — Session 4: Work object calibration
 
 ## What You Will Do in this Session
-1. Learn why the robot needs calibration to understand camera images
-2. Perform a simple calibration using an ArUco marker
-3. Convert object positions from pixels to millimeters
+1. Calibrate the work object for the robot
+2. Draw segmentation masks around each object
+3. Train an AI model to recognize your objects
+4. Evaluate how well the model works
 
-## The Core Problem
-The camera sees **pixels** (e.g., "the circle center is at pixel 800, 450").
-The robot works in **millimeters** (e.g., "move to 250 mm, 150 mm").
-
-In this session you will figure out the conversion between these two worlds.
+## Why using a work object coordinate fram
+The work object (coordinate frame) is used so the robot knows how to translate what the camera sees (ArUco marker pose) into its own motion system. By createing the work object at the same location as the coorcinate system for the ArUco marker, the relation between the camera frame and TCP frame can be linked.
 
 ## Your Tasks
 
-### Task 1: Understand the Calibration Concept
-Look at the camera image. Answer these questions:
-- The image is _______ pixels wide and _______ pixels tall
-- The workspace is approximately _______ mm wide (measure with a ruler)
-- So roughly, 1 pixel ≈ _______ mm (divide workspace width by image width)
-
-This rough estimate shows the idea. Now let's do it precisely.
-
-### Task 2: ArUco Calibration
+### Task 1: ArUco Calibration
 1. Place the ArUco marker flat on the workspace
-2. **Measure the marker**: _______ mm
-4. Find the line marked `# TODO: enter your measured marker size` in section 2.
-5. Enter your measurement
-6. Run the section, it will show you the size you specified.
 
-### Task 3: Move Robot to Image Capture Position
-1. Captures an image and detects the ArUco marker corners
-2. Use the following seetings on the joint values in user coordinate system 0. The 0 coordinate system is mounted in the base of the robot. 
-	J1  90
-	J2   0
-	J3 -50
-	J4 -40
-	J5  90
-	J6 -90 or 270 depending on camera mounting position
-3. Now, place the ArUco marker flat on the workspace in the bottom left corner of the camera view. Make sure you se the hole marker.
-4. Run the capture section and it will show you an image with the ArUco marker.
+### Task 2: Create a work object
+1. Attach the sharp pine to the robot vacium cup, either in the Dobot studio or using the buttoms on the robot.
+2. In DOBOT studio, set the robot in online mode
+3. In DOBOT studio, select **Settings** -> **User coordiate system**
+4. Select the **Camera** coordinate system and press update using Three points settings. If **Camera** does not exist add a new system named **Camera**.
+5. Jog or manually drag the robot to the exact bottom left corner/origin of the ArUco marker coordinate system origo and update the first position
+6. Jog the robot straight out along the positive X-axis direction and adjust Y position if needed, compare with lines on paper. Update the second position
+7. Jog the robot over into the positive Y-axis direction, adjust X position if neede and update the third position. Start from the second X position (unlike ABB)
+8. Click Confirm and then Save. The robot calculates the new axes and applies the offset.
 
-### Task 4: Verification of your Calibration
-1. Place an object on the workspace within the cameras view.
-2. Take a ruler and measure the distance from the lower left corner of the ArUco to the center of the marker.
-3. At the top of the section find **MANUAL_MEASUREMENT_MM = 130 # <-- CHANGE THIS** enter the correct measurement in mm.
-4. Run the verification section to capture an image and find the object's pixel position
-5. The program will show an image where it marked the marker and the calculated distance.
-6. Is the error between the measured and the calculated acceptable for a suction cup? (hint: ±5–10 mm is usually fine)
-
+### TASK 2: Base position
+1. Open the Jog menu
+2. Jog to the following coordinates in the **Camera** coordinate system.
+	X    0
+    Y    0
+    Z  250
+    RX 180
+    RY   0
+    RZ  90
+4. Set the robot in TCP mode.
