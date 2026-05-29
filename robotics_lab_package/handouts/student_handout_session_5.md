@@ -11,32 +11,31 @@ The work object (coordinate frame) is used so the robot knows how to translate w
 
 ## Your Tasks
 
-### Task 1: Identify the ArUco marker coordinate system
-1. Captures an image and detects the ArUco marker corners
-2. Use the following seetings on the joint values
+### Task 1: Create a work object
+1. Attach the sharp pine to the robot vacium cup, either in the Dobot studio or using the buttoms on the robot.
+2. In DOBOT studio, set the robot in online mode
+3. In DOBOT studio, select **Settings** -> **User coordiate system**
+4. Select the **Camera** coordinate system and press update using Three points settings. If **Camera** does not exist add a new system named **Camera**.
+5. Jog or manually drag the robot to the exact bottom left corner/origin of the ArUco marker coordinate system origo and update the first position
+6. Jog the robot straight out along the positive **x** direction to the  ArUco marker coordinate system origo and update the second position
+7. Jog the robot over into the positive Y-axis direction of the ArUco marker coordinate system origo and update the third position. Start from the second **x** position (unlike ABB)
+8. Click Confirm and then Save. The robot calculates the new axes and applies the offset.
+9. 
+
+### TASK 2: Base position
+1. Open the Jog menu
+2. Jog to the following joint values.
 	J1  90
 	J2   0
 	J3 -50
 	J4 -40
 	J5  90
-	J6 -90
-2. Move the papper so the  ArUco marker coordinate system is in the bottom left corner. Make sure you se the hole marker.
-
-
-### Task 2: Create a work object
-1. Attach the sharp pine to the robot vacium cup, either in the Dobot studio or using the buttoms at the robot
-2. In DOBOT STUDIEO Pro, set the robot in continus mode
-3. In DOBOT studio, select **Parameter settings** -> **User coordiate systems**
-4. Select the **CameraFr** and press update using Three points settings
-5. Jog or manually drag the robot to the exact corner/origin of the ArUco marker coordinate system origo and update the first position
-6. Jog the robot straight out along the positive **x** direction to the  ArUco marker coordinate system origo and update the second position
-7. Jog the robot over into the positive Y-axis direction of the ArUco marker coordinate system origo and update the theird position. Start from the second **x** position (unlike ABB)
-8. Click Calculate and then Save or OK. The robot calculates the new axes and applies the offset.
-9. Set the robot in TCP mode
+	J6 -90 or 270 depending on camera mounting position
+4. Set the robot in TCP mode.
     
 
 
-### Task x: Pack down the robot
+### Task x: Information About Packing down the Robot
 1. Use the following seetings on the joint values
 	J1    0 
 	J2  125

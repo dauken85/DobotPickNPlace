@@ -40,11 +40,9 @@ Suction ON → Lift → Move to drop zone → Suction OFF
 3. Run section 3b.
 4. Run section 3c and the TCP should point out where the 0.0 coordinate is, i.e. Above the bottom left corner of the ArUco.
 
-### Task 4: Test Move
-1. Run section 4 and the TCP should point out where the 0.0 coordinate is, i.e. Above the bottom left corner of the ArUco.
 
-### Task 5: Capture, Infer, Pick
-1. Before running step 5 verify that the setting of all offsets are 0.0.
+### Task 4: Capture, Infer, Pick
+1. Before running step 4 verify that the setting of all offsets in the jupiter notebook are 0.0.
 2. The X_OFFSET = 0.0, etc. represents the tip of the TCP pointer.
 3. But we start with 0.0 just to verify that it is working.
 4. Run step 5.

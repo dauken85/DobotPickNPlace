@@ -27,14 +27,20 @@ This rough estimate shows the idea. Now let's do it precisely.
 4. Find the line marked `# TODO: enter your measured marker size` in section 2.
 5. Enter your measurement
 6. Run the section, it will show you the size you specified.
-7. Now, place the ArUco marker flat on the workspace in the bottom left corner of the camera view.
-8. Run the capture section and it will show you an image with the ArUco marker.
-9. Record the results:
-   - Marker width in pixels: _______
-   - Marker size in mm: _______
-   - **mm per pixel**: _______
 
-### Task 3: Verification of your Calibration
+### Task 3: Move Robot to Image Capture Position
+1. Captures an image and detects the ArUco marker corners
+2. Use the following seetings on the joint values in user coordinate system 0. The 0 coordinate system is mounted in the base of the robot. 
+	J1  90
+	J2   0
+	J3 -50
+	J4 -40
+	J5  90
+	J6 -90 or 270 depending on camera mounting position
+3. Now, place the ArUco marker flat on the workspace in the bottom left corner of the camera view. Make sure you se the hole marker.
+4. Run the capture section and it will show you an image with the ArUco marker.
+
+### Task 4: Verification of your Calibration
 1. Place an object on the workspace within the cameras view.
 2. Take a ruler and measure the distance from the lower left corner of the ArUco to the center of the marker.
 3. At the top of the section find **MANUAL_MEASUREMENT_MM = 130 # <-- CHANGE THIS** enter the correct measurement in mm.
