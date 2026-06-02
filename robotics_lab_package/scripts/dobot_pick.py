@@ -32,7 +32,7 @@ WORKSPACE_Y_MIN = -300.0
 WORKSPACE_Y_MAX =  300.0
 SAFE_Z          =  100.0   # mm -- safe travel height
 PICK_Z          =    5.0   # mm -- suction pick height
-DROP_POSITION   = (200.0, -200.0, 50.0)  # (X, Y, Z) in work object frame
+DROP_POSITION   = (200.0, -200.0, 5.0)  # (X, Y, Z) in work object frame
 
 SUCTION_DELAY   = 0.5  # seconds after activating/releasing suction
 

@@ -1,6 +1,6 @@
 # Student Handout — Session 2: Annotation and Training
 
-## What You Will Do Today
+## What You Will Do in this Session
 1. Upload your images to Roboflow
 2. Draw segmentation masks around each object
 3. Train an AI model to recognize your objects
@@ -15,8 +15,7 @@ The AI model learns **only** from the examples you give it. If you label objects
 ### Task 1: Upload Images
 1. Log into Roboflow at [app.roboflow.com](https://app.roboflow.com)
 2. Open your group's project
-3. Upload all your images from Session 1
-4. Verify the upload count matches your images
+3. Upload all your good images from Session 1
 
 ### Task 2: Define Your Classes
 Use these exact class names:
@@ -24,54 +23,38 @@ Use these exact class names:
 - `rectangle`
 - `circle`
 - `triangle`
+- `hexagon`
+- `ellipse`
 
 **Important:** Do not add extra classes unless the teacher says so.
 
 ### Task 3: Annotate
-1. Select the **polygon annotation** tool (not bounding box!)
-2. For each object in each image:
-   - Click around the object boundary to create a tight polygon
-   - Select the correct class name
-   - Make sure the polygon follows the actual edge of the object
-3. Annotation tips:
-   - **Good:** Polygon tightly follows the object edge
-   - **Bad:** Loose polygon with lots of empty space around the object
-   - **Bad:** Polygon cuts through the object
-   - Use more points for curved shapes (circles)
-   - Use fewer points for straight edges (squares)
+1. Use the "Find objects with AI" when annotating for automatic image detection.
+2. Select the class name from the list or enter it before pressing "Find Objects".
+3. If it detects to many or to few, modify the confidence threshold.
+4. Click save.
+5. Repeat this for all images.
+
 
 ### Task 4: Train Your Model
-1. Go to **Generate** → Create a new version
-2. Use the default preprocessing and augmentation settings
-3. Click **Train** and select the segmentation model
-4. Training takes about 15–30 minutes — use this time for the discussion below
+1. Go to **Dataset** → **Train Model** -> **Custom Training**
+2. Use 10% for validation and 10% for testing.
+3. Use the default preprocessing and augmentation settings
+4. Click **Train** and select the segmentation model
+5. Training takes about 15–20 minutes
 
-### Task 5: Evaluate
-Once training is complete:
-1. Go to the **Visualize** tab
-2. Look at predictions on your test images
-3. Fill in this table:
-
-| Image | Objects Present | Objects Found | Correct? | Notes |
-|-------|----------------|---------------|----------|-------|
-| 1 | | | | |
-| 2 | | | | |
-| 3 | | | | |
-| 4 | | | | |
-| 5 | | | | |
 
 ### Task 6: Record Your API Key
-Your model's API key: ________________________________
-Your model version: ________________________________
+1. Click the settings cog in the left hand side menu -> API keys
+2. Go to Jupiter and enter it under **2. Model training (session 2)**
+3. Go to Projects in the left hand side menu
+4. Select your project.
+5. Under the model name it says: ID: <model-id>/<model version>
+    Example: markers-uorw8/2
+6. Enter the model-id under **2. Model training (session 2)**
+7. Enter the version under **2. Model training (session 2)**
 
-(You will need these in Session 3)
-
-## Discussion Questions (While Training)
-- What would happen if we only had 10 images?
-- What if we mislabeled circles as squares?
-- How does the model know which part of the image is "background"?
-- What is overfitting, and why does it matter?
-
-## Notes Space
-_Use this area to write down observations:_
-
+8. Run the section and inspect the output:
+   - What class was detected?
+   - What is the confidence score?
+   - Where is the mask in the image?
